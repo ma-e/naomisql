@@ -1,0 +1,1008 @@
+
+01 Introduction to C# and Data Types
+
+Understanding Data Types
+Test your Knowledge
+1. What type would you choose for the following “numbers”?
+A person’s telephone number: string (Phone numbers may contain non-numeric characters like hyphens or parentheses.)
+A person’s height: double (Height is usually a decimal value.)
+A person’s age: int (Age is a whole number.)
+A person’s gender (Male, Female, Prefer Not To Answer): enum or string (You could use an enum for specific genders, or a string for flexibility.)
+A person’s salary: decimal (Salary is typically a currency value with precision.)
+A book’s ISBN: string (ISBNs contain hyphens and are treated as identifiers, not numbers.)
+A book’s price: decimal (Price requires precision, especially for currency.)
+A book’s shipping weight: double (Shipping weight can be a decimal.)
+A country’s population: long (A large number, potentially in the billions.)
+The number of stars in the universe: long or double (This could be an estimation.)
+The number of employees in small or medium businesses in the UK: int (Employee count is generally within the range of an int.)
+
+2. What are the difference between value type and reference type variables? What is
+boxing and unboxing?
+Value types: Store the data directly, e.g., int, double, char. When passed to a method or assigned to another variable, a copy of the data is passed.
+Reference types: Store references to the actual data (memory addresses), e.g., string, class, array. When passed to a method or assigned, the reference (not the actual data) is passed, so changes to the data affect all references.
+Boxing: Converting a value type to a reference type (e.g., converting an int to an object).
+Unboxing: Converting a reference type back to a value type.
+
+3. What is meant by the terms managed resource and unmanaged resource in .NET
+Managed Resource: Resources that are handled by the .NET runtime (like memory). The Garbage Collector automatically handles the lifecycle of managed resources.
+Unmanaged Resource: Resources that are outside the control of the .NET runtime, like memory allocated from native code, file handles, database connections, etc. Developers need to explicitly release unmanaged resources (e.g., using Dispose()).
+
+4. Whats the purpose of Garbage Collector in .NET?
+The Garbage Collector (GC) in .NET automatically handles the cleanup of unused objects by reclaiming memory. It frees memory occupied by objects that are no longer referenced, helping to avoid memory leaks and improve memory management without the need for manual intervention.
+
+Playing with Console App
+
+Modify your console application to display a different message. Go ahead and
+intentionally add some mistakes to your program, so you can see what kinds of error
+messages you get from the compiler. The more familiar you are with these messages, and
+what causes them, the better you'll be at diagnosing problems in your programs that you /
+didn't/ intend to add!
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Ask the user for their favorite color
+        Console.WriteLine("What's your favorite color?");
+        string favoriteColor = Console.ReadLine();
+
+        // Ask the user for their astrology sign
+        Console.WriteLine("What's your astrology sign?");
+        string astrologySign = Console.ReadLine();
+
+        // Ask the user for their street address number
+        Console.WriteLine("What's the number of your street address?");
+        int streetAddressNumber = Console.ReadLine(); // Intentional error: ReadLine returns string, not int
+
+        // Generate the hacker name
+        string hackerName = favoriteColor + astrologySign + streetAddressNumber;
+
+        // Display the hacker name
+        Console.WriteLine("Your hacker name is " + hackerName + ".");
+    }
+}
+
+Using just the ReadLine and WriteLine methods and your current knowledge of variables,
+you can have the user pass in quite a few bits of information. Using this approach, create a
+console application that asks the user a few questions and then generates some custom
+output for them. For instance, your program could generate their "hacker name" by asking
+them their favorite color, their astrology sign, and their street address number. The result
+might be something like "Your hacker name is RedGemini480."
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Ask the user for their favorite color
+        Console.WriteLine("What's your favorite color?");
+        string favoriteColor = Console.ReadLine();
+
+        // Ask the user for their astrology sign
+        Console.WriteLine("What's your astrology sign?");
+        string astrologySign = Console.ReadLine();
+
+        // Ask the user for their street address number and parse it to an integer
+        Console.WriteLine("What's the number of your street address?");
+        int streetAddressNumber = int.Parse(Console.ReadLine()); // Corrected to parse the string to an integer
+
+        // Generate the hacker name
+        string hackerName = favoriteColor + astrologySign + streetAddressNumber;
+
+        // Display the hacker name
+        Console.WriteLine("Your hacker name is " + hackerName + ".");
+    }
+}
+
+Practice number sizes and ranges
+
+1. Create a console application project named /02UnderstandingTypes/ that outputs the
+Create a console application project named /02UnderstandingTypes/ that outputs the
+number of bytes in memory that each of the following number types uses, and the
+minimum and maximum values they can have: sbyte, byte, short, ushort, int, uint, long,
+ulong, float, double, and decimal.
+Composite Formatting to learn how to align text in a console application
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Display the memory size and the range for each numeric type
+        Console.WriteLine("Data Type\t\tMemory (bytes)\tMin Value\t\tMax Value");
+
+        // sbyte: 1 byte, signed 8-bit
+        Console.WriteLine($"sbyte\t\t\t{sizeof(sbyte)}\t\t{sbyte.MinValue}\t\t{sbyte.MaxValue}");
+
+        // byte: 1 byte, unsigned 8-bit
+        Console.WriteLine($"byte\t\t\t{sizeof(byte)}\t\t{byte.MinValue}\t\t{byte.MaxValue}");
+
+        // short: 2 bytes, signed 16-bit
+        Console.WriteLine($"short\t\t\t{sizeof(short)}\t\t{short.MinValue}\t\t{short.MaxValue}");
+
+        // ushort: 2 bytes, unsigned 16-bit
+        Console.WriteLine($"ushort\t\t\t{sizeof(ushort)}\t\t{ushort.MinValue}\t\t{ushort.MaxValue}");
+
+        // int: 4 bytes, signed 32-bit
+        Console.WriteLine($"int\t\t\t{sizeof(int)}\t\t{int.MinValue}\t\t{int.MaxValue}");
+
+        // uint: 4 bytes, unsigned 32-bit
+        Console.WriteLine($"uint\t\t\t{sizeof(uint)}\t\t{uint.MinValue}\t\t{uint.MaxValue}");
+
+        // long: 8 bytes, signed 64-bit
+        Console.WriteLine($"long\t\t\t{sizeof(long)}\t\t{long.MinValue}\t\t{long.MaxValue}");
+
+        // ulong: 8 bytes, unsigned 64-bit
+        Console.WriteLine($"ulong\t\t\t{sizeof(ulong)}\t\t{ulong.MinValue}\t\t{ulong.MaxValue}");
+
+        // float: 4 bytes, single-precision floating-point
+        Console.WriteLine($"float\t\t\t{sizeof(float)}\t\t{float.MinValue}\t\t{float.MaxValue}");
+
+        // double: 8 bytes, double-precision floating-point
+        Console.WriteLine($"double\t\t\t{sizeof(double)}\t\t{double.MinValue}\t\t{double.MaxValue}");
+
+        // decimal: 16 bytes, 128-bit precise decimal
+        Console.WriteLine($"decimal\t\t\t{sizeof(decimal)}\t\t{decimal.MinValue}\t\t{decimal.MaxValue}");
+    }
+}
+
+2. Write program to enter an integer number of centuries and convert it to years, days, hours,
+minutes, seconds, milliseconds, microseconds, nanoseconds. Use an appropriate data
+type for every data conversion. Beware of overflows!
+Input: 1
+Output: 1 centuries = 100 years = 36524 days = 876576 hours = 52594560 minutes
+= 3155673600 seconds = 3155673600000 milliseconds = 3155673600000000
+microseconds = 3155673600000000000 nanoseconds
+Input: 5
+Output: 5 centuries = 500 years = 182621 days = 4382904 hours = 262974240
+minutes = 15778454400 seconds = 15778454400000 milliseconds = 15778454400000000
+microseconds = 15778454400000000000 nanoseconds
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Enter the number of centuries:");
+        int centuries = int.Parse(Console.ReadLine());
+
+        // Constants for conversions
+        const int yearsInCentury = 100;
+        const int daysInYear = 36524; // Accounting for leap years on average
+        const int hoursInDay = 24;
+        const int minutesInHour = 60;
+        const int secondsInMinute = 60;
+        const int millisecondsInSecond = 1000;
+        const int microsecondsInMillisecond = 1000;
+        const int nanosecondsInMicrosecond = 1000;
+
+        // Perform the conversions
+        long years = centuries * yearsInCentury;
+        long days = years * daysInYear;
+        long hours = days * hoursInDay;
+        long minutes = hours * minutesInHour;
+        long seconds = minutes * secondsInMinute;
+        long milliseconds = seconds * millisecondsInSecond;
+        long microseconds = milliseconds * microsecondsInMillisecond;
+        long nanoseconds = microseconds * nanosecondsInMicrosecond;
+
+        // Output the results with formatting
+        Console.WriteLine($"{centuries} centuries = {years} years = {days} days = {hours} hours = {minutes} minutes = {seconds} seconds = {milliseconds} milliseconds = {microseconds} microseconds = {nanoseconds} nanoseconds");
+    }
+}
+
+Explore following topics
+C# Keywords
+
+Main() and command-line arguments
+Types (C# Programming Guide)
+Statements, Expressions, and Operators
+Strings (C# Programming Guide)
+Nullable Types (C# Programming Guide)
+Nullable reference types
+Controlling Flow and Converting Types
+
+Log in
+
+Sign up
+You said:
+1. What are the six combinations of access modifier keywords and what do they do?
+In object-oriented programming (OOP), access modifiers are keywords used to specify the visibility or accessibility of classes, methods, and other members. In many programming languages like Java and C#, there are six primary combinations of access modifier keywords, which determine how and where a class member (field, method, etc.) can be accessed. Here are the six common combinations:
+
+1. Public
+Syntax: public
+Access level: Fully accessible.
+Description: The member is accessible from any other class, regardless of package or namespace.
+Use case: When you want a class or method to be available universally.
+2. Private
+Syntax: private
+Access level: Only within the same class.
+Description: The member is accessible only within the same class where it is defined. It cannot be accessed by any other class.
+Use case: When you want to hide the internal details of a class and protect its data from external modification.
+3. Protected
+Syntax: protected
+Access level: Within the same class, subclasses, and package (in some languages).
+Description: The member is accessible within the same class, by subclasses (even if they are in different packages or namespaces), and sometimes by other classes in the same package or namespace (depending on the language).
+Use case: When you want to allow access in the current class and its subclasses but still restrict access from unrelated classes.
+4. Default (Package-Private)
+Syntax: (no modifier, or default in some languages like Java)
+Access level: Within the same package.
+Description: In languages like Java, if no access modifier is specified, the member is accessible only within the same package. This is often called "package-private." In C#, the equivalent is the internal modifier.
+Use case: When you want to expose the class member only to other classes within the same package or module.
+5. Protected Internal
+Syntax: protected internal (in C#)
+Access level: Accessible within the same assembly or from derived classes.
+Description: In C#, protected internal allows access to the member from any class within the same assembly, as well as any derived class, even if they are in different assemblies.
+Use case: When you want to allow access within the same assembly and to subclasses across assemblies.
+6. Private Protected
+Syntax: private protected (in C#)
+Access level: Accessible within the same assembly and by derived classes in the same assembly.
+Description: This is a more restrictive form of protected internal. It allows access to the member only within the same class, its derived classes within the same assembly, and not to any class outside the assembly.
+Use case: When you want to restrict access to a class member to the current class, derived classes within the same assembly, but not to derived classes in other assemblies.
+Summary Table:
+Access Modifier	Access Level
+public	Accessible everywhere (all classes and packages)
+private	Accessible only within the same class
+protected	Accessible within the same class, subclasses, and sometimes the same package
+Default (package-private)	Accessible within the same package
+protected internal	Accessible within the same assembly and by derived classes
+private protected	Accessible within the same assembly and by derived classes in the same assembly
+These access modifiers help implement encapsulation, a fundamental concept in OOP that controls access to data and methods, improving code maintainability and security.
+
+
+You said:
+revise: I was waiting for Eminum to turn back in the beggning.
+
+Sure! Here's a revised version of your sentence:
+
+"I was waiting for Eminum to come back at the beginning."
+
+This revision corrects the spelling of "beginning" and makes the sentence flow more naturally. Let me know if you meant something slightly different!
+
+
+You said:
+turn his face back? 
+
+Ah, I see! If you're referring to waiting for Eminum to turn his face back, here's a revised version:
+
+"I was waiting for Eminum to turn his face back at the beginning."
+
+This version maintains the idea you're conveying while improving the flow. If you were aiming for something more specific or dramatic, feel free to clarify!
+
+
+You said:
+
+Using just the ReadLine and WriteLine methods and your current knowledge of variables,
+you can have the user pass in quite a few bits of information. Using this approach, create a
+console application that asks the user a few questions and then generates some custom
+output for them. For instance, your program could generate their "hacker name" by asking
+them their favorite color, their astrology sign, and their street address number. The result
+might be something like "Your hacker name is RedGemini480."
+
+Sure! Here's a simple console application in C# that uses Console.ReadLine and Console.WriteLine to ask the user a few questions and generate a custom output, like a "hacker name":
+
+C# Code:
+csharp
+Copy code
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Ask the user for their favorite color
+        Console.WriteLine("What's your favorite color?");
+        string favoriteColor = Console.ReadLine();
+
+        // Ask the user for their astrology sign
+        Console.WriteLine("What's your astrology sign?");
+        string astrologySign = Console.ReadLine();
+
+        // Ask the user for their street address number
+        Console.WriteLine("What's the number of your street address?");
+        string streetAddressNumber = Console.ReadLine();
+
+        // Generate the hacker name
+        string hackerName = favoriteColor + astrologySign + streetAddressNumber;
+
+        // Display the hacker name
+        Console.WriteLine("Your hacker name is " + hackerName + ".");
+    }
+}
+Explanation:
+Console.WriteLine is used to display messages asking the user for input.
+Console.ReadLine is used to capture the user's input for each question.
+We then concatenate the user's input (favorite color, astrology sign, and street address number) to create the "hacker name".
+The program outputs the generated "hacker name" using Console.WriteLine.
+Example Output:
+vbnet
+Copy code
+What's your favorite color?
+Red
+What's your astrology sign?
+Gemini
+What's the number of your street address?
+480
+Your hacker name is RedGemini480.
+How it Works:
+The program first prompts the user for their favorite color, astrology sign, and street address number.
+It then combines these inputs into a single string to generate the "hacker name".
+Finally, it outputs the custom hacker name to the console.
+Let me know if you'd like to modify or expand the program further!
+
+
+You said:
+Playing with Console App
+Modify your console application to display a different message. Go ahead and
+intentionally add some mistakes to your program, so you can see what kinds of error
+messages you get from the compiler. The more familiar you are with these messages, and
+what causes them, the better you'll be at diagnosing problems in your programs that you /
+didn't/ intend to add!
+Using just the ReadLine and WriteLine methods and your current knowledge of variables,
+you can have the user pass in quite a few bits of information. Using this approach, create a
+console application that asks the user a few questions and then generates some custom
+output for them. For instance, your program could generate their "hacker name" by asking
+them their favorite color, their astrology sign, and their street address number. The result
+might be something like "Your hacker name is RedGemini480
+
+Sure! Let's start by modifying the previous console application to include a few intentional mistakes so you can see some common compiler error messages in action.
+
+Modified Console Application with Intentional Errors:
+csharp
+Copy code
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Ask the user for their favorite color
+        Console.WriteLine("What's your favorite color?");
+        string favoriteColor = Console.ReadLine();
+
+        // Ask the user for their astrology sign
+        Console.WriteLine("What's your astrology sign?");
+        string astrologySign = Console.ReadLine();
+
+        // Ask the user for their street address number
+        Console.WriteLine("What's the number of your street address?");
+        int streetAddressNumber = Console.ReadLine(); // Intentional error: ReadLine returns string, not int
+
+        // Generate the hacker name
+        string hackerName = favoriteColor + astrologySign + streetAddressNumber;
+
+        // Display the hacker name
+        Console.WriteLine("Your hacker name is " + hackerName + ".");
+    }
+}
+Intentional Mistake:
+The line where the program tries to read the street address number using Console.ReadLine() is incorrect. Console.ReadLine() returns a string, but we're attempting to store it in an int variable. This will cause a compiler error because we can't assign a string to an integer without conversion.
+Expected Error Message:
+When you try to compile and run this program, you will see an error similar to this:
+
+go
+Copy code
+error CS0029: Cannot implicitly convert type 'string' to 'int'
+This error occurs because you cannot assign a string value (which Console.ReadLine() returns) directly to an int variable.
+
+Fixing the Error:
+To fix this, we need to parse the string input into an integer. You can use int.Parse() or int.TryParse() for this purpose.
+
+Here's how to fix the issue:
+
+csharp
+Copy code
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Ask the user for their favorite color
+        Console.WriteLine("What's your favorite color?");
+        string favoriteColor = Console.ReadLine();
+
+        // Ask the user for their astrology sign
+        Console.WriteLine("What's your astrology sign?");
+        string astrologySign = Console.ReadLine();
+
+        // Ask the user for their street address number and parse it to an integer
+        Console.WriteLine("What's the number of your street address?");
+        int streetAddressNumber = int.Parse(Console.ReadLine()); // Corrected to parse the string to an integer
+
+        // Generate the hacker name
+        string hackerName = favoriteColor + astrologySign + streetAddressNumber;
+
+        // Display the hacker name
+        Console.WriteLine("Your hacker name is " + hackerName + ".");
+    }
+}
+What to Do After Fixing the Code:
+Running the Program: After fixing the mistake, run the program again. It will now correctly generate the "hacker name."
+Intentional Additional Errors: To experiment further, you can add more errors, such as:
+Misspelling method names (e.g., Consle.WriteLine instead of Console.WriteLine).
+Forgetting to close a string with a quote (Console.WriteLine("Hello world);).
+Using an undeclared variable.
+Let me know if you'd like to try more errors or dive into specific error types!
+
+
+You said:
+Create a console application project named /02UnderstandingTypes/ that outputs the
+number of bytes in memory that each of the following number types uses, and the
+minimum and maximum values they can have: sbyte, byte, short, ushort, int, uint, long,
+ulong, float, double, and decimal.
+Composite Formatting to learn how to align text in a console application
+2. Write program to enter an integer number of centuries and convert it to years, days, hours,
+minutes, seconds, milliseconds, microseconds, nanoseconds. Use an appropriate data
+type for every data conversion. Beware of overflows!
+Input: 1
+Output: 1 centuries = 100 years = 36524 days = 876576 hours = 52594560 minutes
+= 3155673600 seconds = 3155673600000 milliseconds = 3155673600000000
+microseconds = 3155673600000000000 nanoseconds
+Input: 5
+Output: 5 centuries = 500 years = 182621 days = 4382904 hours = 262974240
+minutes = 15778454400 seconds = 15778454400000 milliseconds = 15778454400000000
+microseconds = 15778454400000000000 nanoseconds
+Explore following topics
+C# Keywords
+Main() and command-line arguments
+Types (C# Programming Guide)
+Statements, Expressions, and Operators
+Strings (C# Programming Guide)
+Nullable Types (C# Programming Guide)
+Nullable reference types
+Controlling Flow and Converting Types
+Test your Knowledge
+1. What happens when you divide an int variable by 0?
+2. What happens when you divide a double variable by 0?
+3. What happens when you overflow an int variable, that is, set it to a value beyond its
+range?
+4. What is the difference between x = y++; and x = ++y;?
+5. What is the difference between break, continue, and return when used inside a loop
+statement?
+
+Let's break down the tasks you're asking about and provide you with solutions and explanations step-by-step.
+
+Task 1: Output the Memory Usage and Min/Max Values of Various Number Types
+You can use the sizeof() function in C# to get the memory size of each data type in bytes, and you can use the predefined constants like byte.MinValue, byte.MaxValue to get the minimum and maximum values of each type.
+
+Here’s how to write the program:
+
+C# Code for Task 1:
+csharp
+Copy code
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Display the memory size and the range for each numeric type
+        Console.WriteLine("Data Type\t\tMemory (bytes)\tMin Value\t\tMax Value");
+
+        // sbyte: 1 byte, signed 8-bit
+        Console.WriteLine($"sbyte\t\t\t{sizeof(sbyte)}\t\t{sbyte.MinValue}\t\t{sbyte.MaxValue}");
+
+        // byte: 1 byte, unsigned 8-bit
+        Console.WriteLine($"byte\t\t\t{sizeof(byte)}\t\t{byte.MinValue}\t\t{byte.MaxValue}");
+
+        // short: 2 bytes, signed 16-bit
+        Console.WriteLine($"short\t\t\t{sizeof(short)}\t\t{short.MinValue}\t\t{short.MaxValue}");
+
+        // ushort: 2 bytes, unsigned 16-bit
+        Console.WriteLine($"ushort\t\t\t{sizeof(ushort)}\t\t{ushort.MinValue}\t\t{ushort.MaxValue}");
+
+        // int: 4 bytes, signed 32-bit
+        Console.WriteLine($"int\t\t\t{sizeof(int)}\t\t{int.MinValue}\t\t{int.MaxValue}");
+
+        // uint: 4 bytes, unsigned 32-bit
+        Console.WriteLine($"uint\t\t\t{sizeof(uint)}\t\t{uint.MinValue}\t\t{uint.MaxValue}");
+
+        // long: 8 bytes, signed 64-bit
+        Console.WriteLine($"long\t\t\t{sizeof(long)}\t\t{long.MinValue}\t\t{long.MaxValue}");
+
+        // ulong: 8 bytes, unsigned 64-bit
+        Console.WriteLine($"ulong\t\t\t{sizeof(ulong)}\t\t{ulong.MinValue}\t\t{ulong.MaxValue}");
+
+        // float: 4 bytes, single-precision floating-point
+        Console.WriteLine($"float\t\t\t{sizeof(float)}\t\t{float.MinValue}\t\t{float.MaxValue}");
+
+        // double: 8 bytes, double-precision floating-point
+        Console.WriteLine($"double\t\t\t{sizeof(double)}\t\t{double.MinValue}\t\t{double.MaxValue}");
+
+        // decimal: 16 bytes, 128-bit precise decimal
+        Console.WriteLine($"decimal\t\t\t{sizeof(decimal)}\t\t{decimal.MinValue}\t\t{decimal.MaxValue}");
+    }
+}
+Explanation of Task 1:
+This program uses sizeof() to get the memory size of each numeric type and the MinValue and MaxValue properties to display the range of each type.
+The Console.WriteLine method is used to display all this information in a table-like format. We used string interpolation to insert values dynamically.
+Example Output:
+csharp
+Copy code
+Data Type            Memory (bytes)   Min Value             Max Value
+sbyte                1                -128                  127
+byte                 1                0                     255
+short                2                -32768                32767
+ushort               2                0                     65535
+int                  4                -2147483648           2147483647
+uint                 4                0                     4294967295
+long                 8                -9223372036854775808   9223372036854775807
+ulong                8                0                     18446744073709551615
+float                4                -3.402823E+38         3.402823E+38
+double               8                -1.7976931348623157E+308 1.7976931348623157E+308
+decimal              16               -79228162514264337593543950335 79228162514264337593543950335
+Task 2: Convert Centuries to Time Units
+Now, we need to convert a given number of centuries to years, days, hours, minutes, seconds, milliseconds, microseconds, and nanoseconds. For each conversion, use the appropriate data types to avoid overflow.
+
+C# Code for Task 2:
+csharp
+Copy code
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Enter the number of centuries:");
+        int centuries = int.Parse(Console.ReadLine());
+
+        // Constants for conversions
+        const int yearsInCentury = 100;
+        const int daysInYear = 36524; // Accounting for leap years on average
+        const int hoursInDay = 24;
+        const int minutesInHour = 60;
+        const int secondsInMinute = 60;
+        const int millisecondsInSecond = 1000;
+        const int microsecondsInMillisecond = 1000;
+        const int nanosecondsInMicrosecond = 1000;
+
+        // Perform the conversions
+        long years = centuries * yearsInCentury;
+        long days = years * daysInYear;
+        long hours = days * hoursInDay;
+        long minutes = hours * minutesInHour;
+        long seconds = minutes * secondsInMinute;
+        long milliseconds = seconds * millisecondsInSecond;
+        long microseconds = milliseconds * microsecondsInMillisecond;
+        long nanoseconds = microseconds * nanosecondsInMicrosecond;
+
+        // Output the results with formatting
+        Console.WriteLine($"{centuries} centuries = {years} years = {days} days = {hours} hours = {minutes} minutes = {seconds} seconds = {milliseconds} milliseconds = {microseconds} microseconds = {nanoseconds} nanoseconds");
+    }
+}
+Explanation of Task 2:
+The program asks the user to input the number of centuries.
+Then, it calculates how many years, days, hours, minutes, seconds, milliseconds, microseconds, and nanoseconds are in those centuries, using appropriate constants.
+Since these values can grow large, we use the long data type for all calculations to avoid overflow.
+The results are displayed with the Console.WriteLine method using composite formatting, which automatically adjusts the alignment.
+Example Output:
+mathematica
+Copy code
+Enter the number of centuries:
+1
+1 centuries = 100 years = 36524 days = 876576 hours = 52594560 minutes = 3155673600 seconds = 3155673600000 milliseconds = 3155673600000000 microseconds = 3155673600000000000 nanoseconds
+C# Keywords and Other Concepts
+Main() and Command-Line Arguments: Main() is the entry point of a C# console application. If you want to pass command-line arguments, you can modify the Main() method signature to accept an argument, like static void Main(string[] args). You can access the command-line arguments via the args array.
+
+Types (C# Programming Guide): C# supports value types (e.g., int, float, double, bool, etc.) and reference types (e.g., string, object, etc.). Understanding the differences and how they behave in memory is crucial.
+
+Nullable Types: These are types that can hold a null value, such as int?, double?, etc. A nullable type is used when you need to represent the absence of a value. The ? makes a value type nullable.
+
+Test Your Knowledge
+What happens when you divide an int variable by 0?
+
+It throws a DivideByZeroException at runtime.
+What happens when you divide a double variable by 0?
+
+It results in Infinity (positive or negative, depending on the sign of the dividend). Dividing by zero with double does not throw an exception.
+What happens when you overflow an int variable?
+
+If you exceed the range of an int, it will cause an overflow, and the value will wrap around, potentially causing unexpected results. To detect overflows, use checked blocks.
+What is the difference between x = y++; and x = ++y;?
+
+y++ is the post-increment operator: y is used first and then incremented.
+++y is the pre-increment operator: y is incremented first and then used.
+What is the difference between break, continue, and return when used inside a loop?
+
+break: Exits the loop entirely.
+continue: Skips the current iteration and moves to the next iteration of the loop.
+return: Exits the method entirely, not just the loop.
+With this approach, you should now have a good understanding of basic data types, handling user input, and some common programming concepts in C#.
+
+Explore following topics
+C# Keywords
+
+Main() and command-line arguments
+Types (C# Programming Guide)
+Statements, Expressions, and Operators
+Strings (C# Programming Guide)
+Nullable Types (C# Programming Guide)
+Nullable reference types
+
+
+int, float, double, bool, string: Data types in C#.
+class: Declares a class.
+namespace: Declares a namespace.
+public, private, protected, internal: Access modifiers.
+if, else, switch, case, default: Control flow statements.
+for, foreach, while, do: Looping constructs.
+return: Exits a method and optionally returns a value.
+null: Represents a null reference.
+new: Allocates memory for an object and calls a constructor.
+this: Refers to the current instance of a class or struct.
+base: Refers to the base class.
+try, catch, finally: Exception handling keywords.
+namespace, using: Used to define or import namespaces.
+
+Controlling Flow and Converting Types
+Common C# Keywords:
+
+C# Keywords
+C# has a set of reserved keywords that have predefined meanings in the language and cannot be used as identifiers (variable names, class names, etc.). Here is a brief overview of important C# keywords:
+
+
+Controlling Flow and Converting Types
+Test your Knowledge
+
+1. What happens when you divide an int variable by 0?
+Dividing an int by 0 will throw a DivideByZeroException at runtime. This happens because division by zero is mathematically undefined.
+
+2. What happens when you divide a double variable by 0?
+When dividing a double by 0, the result is Infinity or -Infinity (depending on the sign of the number) if the numerator is non-zero, or NaN (Not-a-Number) if the numerator is also zero.
+
+3. What happens when you overflow an int variable, that is, set it to a value beyond its
+range?
+An overflow occurs when you try to assign a value that exceeds the range of an int (which is from -2,147,483,648 to 2,147,483,647). In this case, the value "wraps around" (or wraps), potentially leading to unexpected behavior.
+
+4. What is the difference between x = y++; and x = ++y;?
+x = y++; is post-increment: the value of y is first assigned to x, and then y is incremented.
+x = ++y; is pre-increment: y is incremented first, and then the value of y is assigned to x.
+
+5. What is the difference between break, continue, and return when used inside a loop
+statement?
+break: Exits the entire loop immediately, terminating the loop execution.
+continue: Skips the current iteration of the loop and moves to the next iteration.
+return: Exits the current method entirely, not just the loop, and optionally returns a value if the method has one.
+
+6. What are the three parts of a for statement and which of them are required?
+The three parts of a for loop are:
+Initialization: Executed once before the loop starts (e.g., int i = 0).
+Condition: Checked before each iteration. If false, the loop exits (e.g., i < 10).
+Increment/Decrement: Executed after each iteration (e.g., i++).
+Only the condition is strictly required, but the other two parts are optional.
+
+7. What is the difference between the = and == operators?
+= is the assignment operator, used to assign a value to a variable.
+== is the equality operator, used to compare two values for equality.
+
+8. Does the following statement compile? for ( ; true; ) ;
+Yes, this code compiles, and it is an infinite loop. The for loop has no initialization or increment parts, but the condition true ensures it runs indefinitely. The semicolon ; indicates an empty body.
+
+9. What does the underscore _ represent in a switch expression?
+In a switch expression, the underscore _ is used as a catch-all or default pattern, meaning it matches any value that hasn’t been matched by previous patterns.
+
+10. What interface must an object implement to be enumerated over by using the foreach
+statement?
+An object must implement the IEnumerable interface (or the more specific IEnumerable<T> for generic collections) to be used in a foreach loop. This interface defines the GetEnumerator() method, which returns an enumerator that allows iteration over the collection.
+
+Practice loops and operators
+
+1. FizzBuzzis a group word game for children to teach them about division. Players take turns
+to count incrementally, replacing any number divisible by three with the word /fizz/, any
+number divisible by five with the word /buzz/, and any number divisible by both with /
+fizzbuzz/.
+
+Create a console application in Chapter03 named Exercise03 that outputs a simulated
+FizzBuzz game counting up to 100. The output should look something like the following
+screenshot:
+What will happen if this code executes?
+int max = 500;
+for (byte i = 0; i < max; i++)
+{
+WriteLine(i);
+}
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        for (int i = 1; i <= 100; i++)
+        {
+            if (i % 3 == 0 && i % 5 == 0)
+                Console.WriteLine("FizzBuzz");
+            else if (i % 3 == 0)
+                Console.WriteLine("Fizz");
+            else if (i % 5 == 0)
+                Console.WriteLine("Buzz");
+            else
+                Console.WriteLine(i);
+        }
+    }
+}
+
+Create a console application and enter the preceding code. Run the console application
+and view the output. What happens?
+
+int max = 500;
+for (byte i = 0; i < max; i++)
+{
+    WriteLine(i);
+}
+
+The variable i is of type byte, which is an 8-bit unsigned integer with a range from 0 to 255.
+The loop uses the condition i < max, where max = 500.
+Since i is a byte, it will only be able to hold values between 0 and 255. After i reaches 255, it will overflow and wrap around back to 0 (since the byte type can’t hold numbers larger than 255).
+Therefore, the loop will keep running indefinitely, because i will eventually overflow back to 0 and continue the loop.
+
+What code could you add (don’t change any of the preceding code) to warn us about the
+problem?
+
+int max = 500;
+checked
+{
+    for (byte i = 0; i < max; i++)
+    {
+        Console.WriteLine(i);
+    }
+}
+
+Your program can create a random number between 1 and 3 with the following code:
+int correctNumber = new Random().Next(3) + 1;
+
+Write a program that generates a random number between 1 and 3 and asks the user to
+guess what the number is. Tell the user if they guess low, high, or get the correct answer.
+Also, tell the user if their answer is outside of the range of numbers that are valid guesses
+(less than 1 or more than 3). You can convert the user's typed answer from a string to an
+int using this code:
+int guessedNumber = int.Parse(Console.ReadLine());
+Note that the above code will crash the program if the user doesn't type an integer value.
+For this exercise, assume the user will only enter valid guesses.
+
+using System;
+
+class Exercise03
+{
+    static void Main()
+    {
+        // Generate a random number between 1 and 3
+        Random random = new Random();
+        int correctNumber = random.Next(1, 4); // 1, 2, or 3
+        
+        Console.WriteLine("Guess the number between 1 and 3!");
+
+        // Get user input
+        int guessedNumber;
+        bool validInput = int.TryParse(Console.ReadLine(), out guessedNumber);
+
+        if (!validInput)
+        {
+            Console.WriteLine("Please enter a valid number.");
+            return; // Exit if input is invalid
+        }
+
+        // Check if guess is out of range
+        if (guessedNumber < 1 || guessedNumber > 3)
+        {
+            Console.WriteLine("Your guess is out of range. Please guess a number between 1 and 3.");
+        }
+        else if (guessedNumber < correctNumber)
+        {
+            Console.WriteLine("Your guess is too low!");
+        }
+        else if (guessedNumber > correctNumber)
+        {
+            Console.WriteLine("Your guess is too high!");
+        }
+        else
+        {
+            Console.WriteLine("Congratulations! You guessed the correct number.");
+        }
+    }
+}
+
+
+2. Print-a-Pyramid.Like the star pattern examples that we saw earlier, create a program that
+will print the following pattern: If you find yourself getting stuck, try recreating the two
+examples that we just talked about in this chapter first. They’re simpler, and you can
+compare your results with the code included above.
+This can actually be a pretty challenging problem, so here is a hint to get you going. I used
+three total loops. One big one contains two smaller loops. The bigger loop goes from line
+to line. The first of the two inner loops prints the correct number of spaces, while the
+second inner loop prints out the correct number of stars.
+*
+***
+*****
+*******
+*********
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int correctNumber = new Random().Next(1, 4); // Generates a number between 1 and 3
+        Console.Write("Guess a number between 1 and 3: ");
+        int guessedNumber = int.Parse(Console.ReadLine());
+
+        if (guessedNumber < 1 || guessedNumber > 3)
+            Console.WriteLine("Out of range! Please guess between 1 and 3.");
+        else if (guessedNumber == correctNumber)
+            Console.WriteLine("Correct!");
+        else
+            Console.WriteLine(guessedNumber < correctNumber ? "Too low!" : "Too high!");
+    }
+}
+
+
+3. Write a program that generates a random number between 1 and 3 and asks the user to
+guess what the number is. Tell the user if they guess low, high, or get the correct answer.
+Also, tell the user if their answer is outside of the range of numbers that are valid guesses
+(less than 1 or more than 3). You can convert the user's typed answer from a string to an
+int using this code:
+int guessedNumber = int.Parse(Console.ReadLine());
+Note that the above code will crash the program if the user doesn't type an integer value.
+For this exercise, assume the user will only enter valid guesses.
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Generate a random number between 1 and 3
+        int correctNumber = new Random().Next(1, 4);
+        
+        Console.Write("Guess a number between 1 and 3: ");
+        
+        // Try to read and convert the input from string to integer
+        try
+        {
+            int guessedNumber = int.Parse(Console.ReadLine());
+            
+            if (guessedNumber < 1 || guessedNumber > 3)
+            {
+                Console.WriteLine("Out of range! Please guess a number between 1 and 3.");
+            }
+            else if (guessedNumber == correctNumber)
+            {
+                Console.WriteLine("Correct! You guessed the right number.");
+            }
+            else
+            {
+                Console.WriteLine(guessedNumber < correctNumber ? "Too low!" : "Too high!");
+            }
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Invalid input! Please enter a valid integer.");
+        }
+    }
+}
+
+
+4. Write a simple program that defines a variable representing a birth date and calculates
+how many days old the person with that birth date is currently.
+For extra credit, output the date of their next 10,000 day (about 27 years) anniversary.
+Note: once you figure out their age in days, you can calculate the days until the next
+anniversary using int daysToNextAnniversary = 10000 - (days % 10000); .
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Define the birth date
+        DateTime birthDate = new DateTime(1990, 5, 15);
+        
+        // Calculate the age in days
+        DateTime currentDate = DateTime.Now;
+        int ageInDays = (currentDate - birthDate).Days;
+
+        // Calculate the days until the next 10,000 day anniversary
+        int daysToNextAnniversary = 10000 - (ageInDays % 10000);
+        
+        // Find the date of the next 10,000 day anniversary
+        DateTime nextAnniversary = currentDate.AddDays(daysToNextAnniversary);
+
+        Console.WriteLine($"You are {ageInDays} days old.");
+        Console.WriteLine($"Your next 10,000 day anniversary will be on {nextAnniversary.ToShortDateString()}.");
+    }
+}
+
+5. Write a program that greets the user using the appropriate greeting for the time of day.
+Use only if , not else or switch , statements to do so. Be sure to include the following
+greetings:
+"Good Morning"
+"Good Afternoon"
+"Good Evening"
+"Good Night"
+It's up to you which times should serve as the starting and ending ranges for each of the
+greetings. If you need a refresher on how to get the current time, see DateTime
+Formatting. When testing your program, you'll probably want to use a DateTime variable
+you define, rather than the current time. Once you're confident the program works
+correctly, you can substitute DateTime.Now for your variable (or keep your variable and just
+assign DateTime.Now as its value, which is often a better approach).
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Get the current time (you can replace DateTime.Now with a predefined time for testing)
+        DateTime currentTime = DateTime.Now;
+
+        // Get the hour of the day
+        int hour = currentTime.Hour;
+
+        // Use if statements to determine the greeting
+        if (hour >= 5 && hour < 12)
+        {
+            Console.WriteLine("Good Morning");
+        }
+        else if (hour >= 12 && hour < 17)
+        {
+            Console.WriteLine("Good Afternoon");
+        }
+        else if (hour >= 17 && hour < 21)
+        {
+            Console.WriteLine("Good Evening");
+        }
+        else
+        {
+            Console.WriteLine("Good Night");
+        }
+    }
+}
+
+6. Write a program that prints the result of counting up to 24 using four different increments.
+First, count by 1s, then by 2s, by 3s, and finally by 4s.
+Use nested for loops with your outer loop counting from 1 to 4. You inner loop should
+count from 0 to 24, but increase the value of its /loop control variable/ by the value of the /
+loop control variable/ from the outer loop. This means the incrementing in the /
+afterthought/ expression will be based on a variable.
+Your output should look something like this:
+0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24
+0,2,4,6,8,10,12,14,16,18,20,22,24
+0,3,6,9,12,15,18,21,24
+0,4,8,12,16,20,24
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        for (int i = 1; i <= 4; i++) // Outer loop for the different increments
+        {
+            for (int j = 0; j <= 24; j += i) // Inner loop to increment by i
+            {
+                Console.Write(j + (j < 24 ? ", " : "")); // Print the number with commas
+            }
+            Console.WriteLine(); // Move to the next line after each increment set
+        }
+    }
+}
+
+Explore following topics
+C# operators
+
+Bitwise and shift operators
+Statement keywords
+Casting and type conversions
+Fundamentals of garbage collection
+$ - string interpolation
+Formatting types in .NET
+Iteration statements
+Selection statements
+

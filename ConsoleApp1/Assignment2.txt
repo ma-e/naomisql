@@ -1,0 +1,287 @@
+
+02 Arrays and Strings
+Test your Knowledge
+
+1. When to use String vs. StringBuilder in C# ?
+String: Use when you're working with immutable sequences of characters. Strings in C# are immutable, meaning once a string is created, it cannot be changed. If you repeatedly modify a string (e.g., concatenating strings in a loop), this can be inefficient because each modification creates a new string in memory.
+StringBuilder: Use when you need to mutate or build a string over time, especially in a loop. StringBuilder is mutable and allows efficient modifications of strings, such as appending, replacing, and removing characters, without creating new string objects on each modification.
+
+2. What is the base class for all arrays in C#?
+The base class for all arrays in C# is System.Array.
+
+3. How do you sort an array in C#?
+To sort an array in C#, you can use the Array.Sort() method. Here's an example:
+int[] numbers = { 5, 2, 8, 1, 3 };
+Array.Sort(numbers);
+This sorts the array in ascending order. To sort in descending order, you can pass a custom comparison:
+Array.Sort(numbers, (x, y) => y.CompareTo(x));
+
+4. What property of an array object can be used to get the total number of elements in
+an array?
+The property you use is Length. Example:
+int[] numbers = { 1, 2, 3, 4, 5 };
+Console.WriteLine(numbers.Length); // Outputs 5
+
+5. Can you store multiple data types in System.Array?
+No, arrays in C# are typically strongly typed, meaning you can only store one type of data in an array. However, you can store multiple data types in a System.Array if the array is declared as an object[] because all types in C# ultimately derive from System.Object.
+object[] mixedArray = { 1, "Hello", 3.14, true };
+
+6. What’s the difference between the System.Array.CopyTo() and System.Array.Clone()?
+CopyTo(): Copies the elements of an array to another array starting from a specified index. It doesn't create a new array but rather copies data into an existing array.
+int[] source = { 1, 2, 3 };
+int[] destination = new int[3];
+source.CopyTo(destination, 0);
+Clone(): Creates a shallow copy of the array. A new array is created with the same elements as the original, but the two arrays are distinct objects.
+int[] source = { 1, 2, 3 };
+int[] clone = (int[])source.Clone();
+
+Practice Arrays
+
+1. Copying an Array
+
+Write code to create a copy of an array. First, start by creating an initial array. (You can use
+whatever type of data you want.) Let’s start with 10 items. Declare an array variable and
+assign it a new array with 10 items in it. Use the things we’ve discussed to put some values
+in the array.
+Now create a second array variable. Give it a new array with the same length as the first.
+Instead of using a number for this length, use the Lengthproperty to get the size of the
+original array.
+Use a loop to read values from the original array and place them in the new array. Also
+print out the contents of both arrays, to be sure everything copied correctly.
+
+using System;
+class Program
+{
+    static void Main()
+    {
+        // Initialize the original array
+        int[] originalArray = new int[10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        
+        // Create a new array with the same length as the original
+        int[] copiedArray = new int[originalArray.Length];
+        
+        // Copying elements from the original array to the new array
+        for (int i = 0; i < originalArray.Length; i++)
+        {
+            copiedArray[i] = originalArray[i];
+        }
+        
+        // Print the original array
+        Console.WriteLine("Original Array:");
+        foreach (var item in originalArray)
+        {
+            Console.Write(item + " ");
+        }
+
+        Console.WriteLine("\nCopied Array:");
+        // Print the copied array
+        foreach (var item in copiedArray)
+        {
+            Console.Write(item + " ");
+        }
+    }
+}
+
+2. Write a simple program that lets the user manage a list of elements. It can be a grocery list,
+"to do" list, etc. Refer to Looping Based on a Logical Expression if necessary to see how to
+implement an infinite loop. Each time through the loop, ask the user to perform an
+operation, and then show the current contents of their list. The operations available should
+be Add, Remove, and Clear. The syntax should be as follows:
++ some item
+- some item
+--
+Your program should read in the user's input and determine if it begins with a “+” or “-“ or
+if it is simply “—“ . In the first two cases, your program should add or remove the string
+given ("some item" in the example). If the user enters just “—“ then the program should
+clear the current list. Your program can start each iteration through its loop with the
+following instruction:
+Input Output
+4 1 1 4 2 3 4 4 1 2 4 9 3 The number 4 is the most frequent (occurs 5 times)
+7 7 7 0 2 2 2 0 10 10 10 The numbers 2, 7 and 10 have the same maximal
+frequence (each occurs 3 times). The leftmost of them is 7.
+
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        List<string> groceryList = new List<string>();
+        string input;
+
+        while (true)
+        {
+            Console.WriteLine("\nEnter an operation (+ for Add, - for Remove, -- for Clear, or 'exit' to quit):");
+            input = Console.ReadLine();
+
+            if (input.ToLower() == "exit")
+                break;
+
+            if (input.StartsWith("+"))
+            {
+                string item = input.Substring(1).Trim();
+                groceryList.Add(item);
+                Console.WriteLine($"Added: {item}");
+            }
+            else if (input.StartsWith("-"))
+            {
+                string item = input.Substring(1).Trim();
+                if (groceryList.Remove(item))
+                    Console.WriteLine($"Removed: {item}");
+                else
+                    Console.WriteLine($"Item '{item}' not found.");
+            }
+            else if (input == "--")
+            {
+                groceryList.Clear();
+                Console.WriteLine("List cleared.");
+            }
+
+            Console.WriteLine("Current List:");
+            foreach (var item in groceryList)
+            {
+                Console.WriteLine(item);
+            }
+        }
+    }
+}
+
+
+Practice Strings
+
+1. Write a program that reads a string from the console, reverses its letters and prints the
+result back at the console.
+Write in two ways
+Convert the string to char array, reverse it, then convert it to string again
+Print the letters of the string in back direction (from the last to the first) in a for-loop
+Input Output
+sample elpmas
+24tvcoi92 29iocvt42
+
+using System;
+class Program
+{
+    static void Main()
+    {
+        string input = "sample";
+        string reversed = "";
+        
+        for (int i = input.Length - 1; i >= 0; i--)
+        {
+            reversed += input[i];
+        }
+        
+        Console.WriteLine(reversed); // Output: elpmas
+    }
+}
+
+
+2. Write a program that reverses the words in a given sentence without changing the
+punctuation and spaces
+Use the following separators between the words: . , : ; = ( ) & [ ] " ' \ / ! ? (space).
+All other characters are considered part of words, e.g. C++, a+b, and a77 are
+considered valid words.
+The sentences always start by word and end by separator.
+C# is not C++, and PHP is not Delphi!
+Delphi not is PHP, and C++ not is C#!
+The quick brown fox jumps over the lazy dog /Yes! Really!!!/.
+Really Yes dog lazy the over jumps fox brown /quick! The!!!/.
+
+using System;
+using System.Text.RegularExpressions;
+
+class Program
+{
+    static void Main()
+    {
+        string sentence = "C# is not C++, and PHP is not Delphi!";
+        string[] separators = { " ", ".", ",", ":", ";", "=", "(", ")", "&", "[", "]", "\"", "'", "\\", "/", "!", "?" };
+        string[] words = sentence.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+        Array.Reverse(words);
+
+        string reversedSentence = string.Join(" ", words);
+        Console.WriteLine(reversedSentence);  // Example Output: Delphi! not is PHP and C++, not is C#!
+    }
+}
+
+
+3. Write a program that extracts from a given text all palindromes, e.g. “ABBA”, “lamal”, “exe”
+and prints them on the console on a single line, separated by comma and space.Print all
+unique palindromes (no duplicates), sorted
+Hi,exe? ABBA! Hog fully a string: ExE. Bob
+a, ABBA, exe, ExE
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        string text = "Hi,exe? ABBA! Hog fully a string: ExE. Bob";
+        string[] words = text.Split(new[] { ' ', ',', '.', '!', '?', ';', ':', '-', '/', '\\', '(', ')', '[', ']' }, StringSplitOptions.RemoveEmptyEntries);
+
+        HashSet<string> palindromes = new HashSet<string>();
+
+        foreach (var word in words)
+        {
+            string lowerWord = word.ToLower();
+            if (lowerWord == new string(lowerWord.Reverse().ToArray()))
+            {
+                palindromes.Add(word);
+            }
+        }
+
+        Console.WriteLine(string.Join(", ", palindromes.OrderBy(p => p)));  // Output: ABBA, ExE, exe, Bob
+    }
+}
+
+
+4. Write a program that parses an URL given in the following format:
+[protocol]://[server]/[resource]
+The parsing extracts its parts: protocol, server and resource.
+The [server] part is mandatory.
+The [protocol] and [resource] parts are optional.
+https://www.apple.com/iphone
+[protocol] = "https"
+[server] = "www.apple.com"
+[resource] = "iphone"
+ftp://www.example.com/employee
+[protocol] = "ftp"
+[server] = "www.example.com"
+[resource] = "employee"
+https://google.com
+[protocol] = "https"
+[server] = "google.com"
+[resource] = ""
+www.apple.com
+[protocol] = ""
+[server] = "www.apple.com"
+[resource] = ""
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string url = "https://www.apple.com/iphone";
+        Uri uri = new Uri(url);
+
+        string protocol = uri.Scheme;
+        string server = uri.Host;
+        string resource = uri.AbsolutePath.TrimStart('/');
+
+        Console.WriteLine($"[protocol] = \"{protocol}\"");
+        Console.WriteLine($"[server] = \"{server}\"");
+        Console.WriteLine($"[resource] = \"{resource}\"");
+    }
+}
+
+Explore the following Topics
+
+Strings: Working with immutable sequences of characters (String vs StringBuilder).
+Arrays: Arrays, multidimensional arrays, and collections in C#.
+StringBuilder: Efficient string manipulation when repeated changes are needed.
